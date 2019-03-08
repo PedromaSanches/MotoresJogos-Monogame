@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections;
 
 namespace Nave
 {
@@ -14,7 +16,7 @@ namespace Nave
 
         private Nave nave;
 
-        //CRiação de Matrizes para desenhar o modelo
+        //Criação de Matrizes para desenhar o modelo
 
         public Game1()
         {
@@ -33,6 +35,7 @@ namespace Nave
             // TODO: Add your initialization logic here
             Camera.Initialize(graphics.GraphicsDevice);
             base.Initialize();
+            
         }
 
         /// <summary>
@@ -48,7 +51,9 @@ namespace Nave
 
             nave = new Nave(Content); // Variável para carregar o modelo 3d da nave
 
-    }
+            //NavePool<Nave> pool = new NavePool<Nave>(10);
+
+        }
 
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload

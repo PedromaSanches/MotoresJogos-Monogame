@@ -14,10 +14,6 @@ namespace Nave
     {
 
         private Model model; // Variável para carregar o modelo 3d da nave
-
-        private Matrix world;
-        
-
         public Matrix World { get; set; }
 
 
@@ -29,7 +25,13 @@ namespace Nave
         {
             //Load do modelo da nave
             model = content.Load<Model>("Models/Ship1/p1_saucer");
-            this.world = Matrix.CreateTranslation(new Vector3(0, 0, 0));
+            this.World = Matrix.CreateTranslation(new Vector3(0, 0, 0));
+
+        }
+
+        //Construtor sem parâmetros
+        public Nave()
+        {
 
         }
 
@@ -46,7 +48,7 @@ namespace Nave
             {
                 foreach (BasicEffect effect in mesh.Effects)
                 {
-                    effect.World = world;
+                    effect.World = World;
                     effect.View = Camera.View;
                     effect.Projection = Camera.Projection;
                 }

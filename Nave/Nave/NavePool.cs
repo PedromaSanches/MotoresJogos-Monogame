@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
+
+/********* Código retirado de: https://blog.bitbull.com/2016/06/30/optimising-memory-use-in-monogame/ *********/
 
 namespace Nave
 {
@@ -8,7 +9,7 @@ namespace Nave
 	 * Any object that is to be pooled needs to implement this
 	 * interface and support a parameterless constructor.
 	 */
-    public interface INavePool
+public interface INavePool
     {
         /*
 		 Should reset all the object's properties to their default state.
