@@ -10,11 +10,13 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Nave
 {
-    public class Nave
+    public class Nave : INavePool
     {
 
         private Model model; // Variável para carregar o modelo 3d da nave
         public Matrix World { get; set; }
+        public bool PoolIsValid { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool PoolIsFree { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
 
         /// <summary>
@@ -57,7 +59,14 @@ namespace Nave
             }
         }
 
+        void INavePool.Initialize()
+        {
+            this.World = Matrix.CreateTranslation(new Vector3(0, 0, 0));
+        }
 
-
+        void INavePool.Release()
+        {
+           
+        }
     }
 }

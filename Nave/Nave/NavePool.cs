@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+
 
 /********* Código retirado de: https://blog.bitbull.com/2016/06/30/optimising-memory-use-in-monogame/ *********/
 
@@ -23,24 +25,6 @@ public interface INavePool
 		 */
         void Release();
 
-        /*
-		 Set by the pool and used as a 'sanity check' to check this object came from
-		 the pool originally
-		 */
-        bool PoolIsValid
-        {
-            get;
-            set;
-        }
-
-        /*
-		 Used by the pool as a 'sanity check' to ensure objects aren't freed twice.
-		 */
-        bool PoolIsFree
-        {
-            get;
-            set;
-        }
     }
     /*
 	  Template for a generically-typed object pool - pooled objects must
@@ -50,22 +34,26 @@ public interface INavePool
 	 */
     public class NavePool<T> where T : INavePool, new()
     {
-        // I use a Stack data structure for storing the objects as it should be 
-        // more efficient than List and we don't have to worry about indexing 
-        private Stack stack;
+        // Living Ships
+        private List<T> live_stack;
+        // Dead Ships
+        private List<T> dead_stack;
+
         // The total capacity of the pool - this I only really use this for debugging
         private int capacity;
 
         /*
 		 Creates a new object pool with the specifed initial number of objects
 		 */
-        public NavePool(int capacity)
+        public NavePool(int capacity, T template)
         {
-            stack = new Stack(capacity);
+            this.capacity = capacity;
+            live_stack = new List<T>(this.capacity);
+            dead_stack = new List<T>(this.capacity);
 
-            for (int i = 0; i < capacity; i++)
+            for (int i = 0; i < this.capacity; i++)
             {
-                AddNewObject();
+                AddNewObject(template);
             }
         }
 
@@ -73,12 +61,9 @@ public interface INavePool
 		 Adds a new object to the pool - ideally this doesn't happen very often 
 		 other than when the pool is constructed
 		 */
-        private void AddNewObject()
+        private void AddNewObject(T obj)
         {
-            T obj = new T();
-            obj.PoolIsValid = true;
-            stack.Push(obj);
-            capacity++;
+            live_stack.Add(obj);
         }
 
         /*
@@ -90,17 +75,8 @@ public interface INavePool
 		 */
         public void Release(T obj)
         {
-            if (obj.PoolIsFree)
-            {
-                throw new Exception("POOL (" + this + "): Object already released " + obj);
-            }
-            else if (!obj.PoolIsValid)
-            {
-                throw new Exception("POOL (" + this + ") Object not valid " + obj);
-            }
-            obj.Release();
-            obj.PoolIsFree = true;
-            stack.Push(obj);
+            live_stack.Remove(obj);
+            dead_stack.Add(obj);
         }
 
         /*
@@ -112,14 +88,28 @@ public interface INavePool
 		 */
         public T Get()
         {
-            if (stack.Count == 0)
+            if (live_stack.Count == 0)
             {
-                AddNewObject();
+                //There aren't any living ship so we revive the dead ones
+                ReviveDead();
             }
-            T obj = (T)stack.Pop();
+            T obj = live_stack[0];
+            Release(obj);
             obj.Initialize();
-            obj.PoolIsFree = false;
             return obj;
+        }
+
+        //Add all the ships in the dead stack to the living stack, clear dead_stack
+        public void ReviveDead()
+        {
+            foreach (T obj in dead_stack)
+            {
+                live_stack.Add(obj);
+            }
+            foreach (T obj in live_stack)
+            {
+               dead_stack.Remove(obj);
+            }
         }
     }
 
