@@ -14,7 +14,8 @@ namespace Nave
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        private Nave nave;
+        private Nave nave_template;
+        private NavePool<Nave> pool;
 
         //Criação de Matrizes para desenhar o modelo
 
@@ -49,9 +50,9 @@ namespace Nave
 
             // TODO: use this.Content to load your game content here
 
-            nave = new Nave(Content); // Variável para carregar o modelo 3d da nave
+            nave_template = new Nave(Content); // Variável para carregar o modelo 3d da nave
 
-            //NavePool<Nave> pool = new NavePool<Nave>(10);
+            pool = new NavePool<Nave>(10, nave_template);
 
         }
 
@@ -88,6 +89,8 @@ namespace Nave
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            Nave nave = pool.Get();
 
             // TODO: Add your drawing code here
             nave.Draw();
