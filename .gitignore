@@ -59,3 +59,13 @@ monodroid*.msi
 
 # Nave/.vs/
 # Nave/Nave/obj/Debug
+*.exe
+Nave/Nave/Nave.csproj
+Nave/.vs/Nave/v15/.suo
+Nave/.vs/Nave/v15/Server/sqlite3/storage.ide-shm
+*.exe
+*.pdb
+*.ide-shm
+*.csproj
+*.cache
+*.txt
