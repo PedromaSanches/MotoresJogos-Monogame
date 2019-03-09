@@ -57,5 +57,5 @@ monodroid*.msi
 *.dll
 
 
-Nave/.vs/
-Nave/Nave/obj/Debug
+# Nave/.vs/
+# Nave/Nave/obj/Debug
