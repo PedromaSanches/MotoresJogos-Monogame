@@ -69,3 +69,6 @@ Nave/.vs/Nave/v15/Server/sqlite3/storage.ide-shm
 *.csproj
 *.cache
 *.txt
+*.lock
+*.ide
+*.ide-wal
