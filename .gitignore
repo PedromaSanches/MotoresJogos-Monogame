@@ -6,3 +6,6 @@
 *.pidb
 *.resources
 test-results/
+
+Nave/.vs/
+Nave/Nave/obj/Debug
