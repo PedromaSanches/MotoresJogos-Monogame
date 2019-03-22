@@ -16,12 +16,34 @@ namespace Nave
     public class NaveModel
     {
 
+        private BoundingSphere boundingSphere = new BoundingSphere(); //Variável para criar a bounding sphere da Nave para Collision Detection
+
         private Model model; // Variável para carregar o modelo 3d da nave
 
+        /// <summary>
+        /// Construtor que inicializa o modelo da nave
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="path"></param>
         public NaveModel(ContentManager content, string path)
         {
             //Load do modelo da nave
             model = content.Load<Model>(path);
+            
+            //Criação de Bounding Sphere para a Nave
+            foreach (ModelMesh mesh in this.model.Meshes)
+            {
+                boundingSphere = BoundingSphere.CreateMerged(this.boundingSphere, mesh.BoundingSphere);
+            }
+            
+        }
+
+        /// <summary>
+        /// Construtor pré-definido
+        /// </summary>
+        public NaveModel()
+        {
+
         }
 
         /// <summary>
@@ -46,5 +68,15 @@ namespace Nave
             
         }
 
+        /// <summary>
+        /// GET /SET Bounding Sphere
+        /// </summary>
+        public BoundingSphere BoundingSphere
+        {
+            get { return this.boundingSphere; }
+
+            set { this.boundingSphere = value;  }
+        }
+        
     }
 }
