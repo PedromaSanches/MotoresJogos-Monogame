@@ -43,6 +43,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
+    <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\FireWeapon.cs" />
+    <Compile Include="Commands\MoveUp.cs" />
+    <Compile Include="Commands\MoveDown.cs" />
+    <Compile Include="Commands\MoveLeft.cs" />
+    <Compile Include="Commands\MoveRight.cs" />
+    <Compile Include="Commands\MoveBack.cs" />
+    <Compile Include="Commands\MoveFoward.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="InputManager.cs" />
     <Compile Include="Message.cs" />

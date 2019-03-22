@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Nave.Commands;
 
 /********* Código fornecido pelo professor *********/
 namespace Nave
@@ -50,11 +51,20 @@ namespace Nave
 
             static public TipoCamera tipoCamera;
 
-            /// <summary>
-            /// Inicializa os componentes da camara
-            /// </summary>
-            /// <param name="graphics">Instância de GraphicsDevice</param>
-            static public void Initialize(GraphicsDevice graphics)
+            static private Command buttonFire;
+            static private Command buttonFoward;
+            static private Command buttonBack;
+            static private Command buttonLeft;
+            static private Command buttonRight;
+            static private Command buttonUp;
+            static private Command buttonDown;
+
+
+        /// <summary>
+        /// Inicializa os componentes da camara
+        /// </summary>
+        /// <param name="graphics">Instância de GraphicsDevice</param>
+        static public void Initialize(GraphicsDevice graphics)
             {
 
                 tipoCamera = TipoCamera.Free;
@@ -87,7 +97,15 @@ namespace Nave
                 Mouse.SetPosition(graphics.Viewport.Width / 2, graphics.Viewport.Height / 2);
 
                 originalMouseState = Mouse.GetState();
-            }
+
+            buttonFire = new FireWeapon();
+            buttonFoward = new MoveFoward();
+            buttonBack = new MoveBack();
+            buttonLeft = new MoveLeft();
+            buttonRight = new MoveRight();
+            buttonUp = new MoveUp();
+            buttonDown = new MoveDown();
+        }
 
             /// <summary>
             /// Calcula e atualiza a ViewMatrix para cada frame, consoante a posição e rotação da camâra
@@ -164,17 +182,17 @@ namespace Nave
                 Vector3 moveVector = new Vector3(0, 0, 0);
                 KeyboardState keyState = Keyboard.GetState();
                 if (keyState.IsKeyDown(Keys.Up) || keyState.IsKeyDown(Keys.W))
-                    moveVector += new Vector3(0, 0, -1);
+                    buttonFoward.Execute(amount);
                 if (keyState.IsKeyDown(Keys.Down) || keyState.IsKeyDown(Keys.S))
-                    moveVector += new Vector3(0, 0, 1);
+                    buttonBack.Execute(amount);
                 if (keyState.IsKeyDown(Keys.Right) || keyState.IsKeyDown(Keys.D))
-                    moveVector += new Vector3(1, 0, 0);
+                    buttonRight.Execute(amount);
                 if (keyState.IsKeyDown(Keys.Left) || keyState.IsKeyDown(Keys.A))
-                    moveVector += new Vector3(-1, 0, 0);
+                    buttonLeft.Execute(amount);
                 if (keyState.IsKeyDown(Keys.Q))
-                    moveVector += new Vector3(0, 1, 0);
+                    buttonUp.Execute(amount);
                 if (keyState.IsKeyDown(Keys.E))
-                    moveVector += new Vector3(0, -1, 0);
+                    buttonDown.Execute(amount);
                 if (keyState.IsKeyDown(Keys.O) && !keyStateAnterior.IsKeyDown(Keys.O))
                 {
                     if (graphics.RasterizerState == rasterizerStateSolid)
@@ -207,8 +225,6 @@ namespace Nave
                     if (moveSpeed > 0.5f) moveSpeed -= 0.5f;
                 }
 
-                AddToCameraPosition(moveVector * amount);
-
                 keyStateAnterior = keyState;
                 mouseStateAnterior = currentMouseState;
             }
@@ -217,7 +233,7 @@ namespace Nave
             /// Atualiza a posição da camâra
             /// </summary>
             /// <param name="vectorToAdd"></param>
-            static private void AddToCameraPosition(Vector3 vectorToAdd)
+            static public void AddToCameraPosition(Vector3 vectorToAdd)
             {
                 Matrix cameraRotation = Matrix.CreateRotationX(updownRot) * Matrix.CreateRotationY(leftrightRot);
                 Vector3 rotatedVector = Vector3.Transform(vectorToAdd, cameraRotation);
