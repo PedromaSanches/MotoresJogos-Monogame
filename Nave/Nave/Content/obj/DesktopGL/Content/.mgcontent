@@ -4,8 +4,8 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/User/Desktop/MotoresJogos-Monogame/Nave/Nave/Content/Models/Ship1/p1_saucer.fbx</File>
-    <File>C:/Users/User/Desktop/MotoresJogos-Monogame/Nave/Nave/Content/Textures/saucer_p1_diff_v1.tga</File>
+    <File>C:/Users/pedro/Desktop/Motores de Jogos/MotoresJogos-Monogame/Nave/Nave/Content/Models/Ship1/p1_saucer.fbx</File>
+    <File>C:/Users/pedro/Desktop/Motores de Jogos/MotoresJogos-Monogame/Nave/Nave/Content/Textures/saucer_p1_diff_v1.tga</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />

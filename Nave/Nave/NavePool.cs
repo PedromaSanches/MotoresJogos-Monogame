@@ -79,17 +79,21 @@ public interface INavePool
         }
 
         //Revive a sinlge ship
-        public T ReviveDead()
+        public void ReviveDead()
         {
-            if (dead_stack.Count == 0)
+            for (int i = 0; i < dead_stack.Count; i++)
             {
-                return default(T); 
+                T obj = dead_stack[i];
+                obj.Initialize();
+                live_stack.Add(obj);
             }
-            T obj = dead_stack[0];
-            dead_stack.Remove(obj);
-            obj.Initialize();
-            live_stack.Add(obj);
-            return obj;
+
+            for (int i = 0; i < live_stack.Count; i++)
+            {
+                dead_stack.Remove(dead_stack[i]);
+            }
+            
+
         }
 
         //Add all the ships in the dead stack to the living stack, clear dead_stack

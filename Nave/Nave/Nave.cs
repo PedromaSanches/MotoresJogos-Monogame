@@ -13,7 +13,7 @@ namespace Nave
     public class Nave : INavePool
     {
 
-        private Model model; // Variável para carregar o modelo 3d da nave
+        private NaveModel naveModel; // Variável para carregar o modelo 3d da nave
         public Matrix World { get; set; }
 
         private bool state;
@@ -29,8 +29,8 @@ namespace Nave
         /// </summary>
         public Nave(ContentManager content)
         {
-            //Load do modelo da nave
-            model = content.Load<Model>("Models/Ship1/p1_saucer");
+           naveModel = new NaveModel(content, "Models/Ship1/p1_saucer");
+            
             this.World = Matrix.CreateTranslation(new Vector3(0, 0, 0));
             state = true;
         }
@@ -50,17 +50,10 @@ namespace Nave
         /// <param name="projection"></param>
         public void Draw()
         {
-            if (state) { 
-                foreach (ModelMesh mesh in model.Meshes)
-                {
-                    foreach (BasicEffect effect in mesh.Effects)
-                    {
-                        effect.World = World;
-                        effect.View = Camera.View;
-                        effect.Projection = Camera.Projection;
-                    }
-                    mesh.Draw();
-                }
+            if (state) {
+
+                naveModel.Draw(World, Camera.View, Camera.Projection);
+                
             }
         }
 

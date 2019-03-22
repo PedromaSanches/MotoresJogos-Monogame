@@ -16,6 +16,7 @@ namespace Nave
 
         private Nave nave_template;
         private NavePool<Nave> pool;
+        private Nave nave;
 
         //Criação de Matrizes para desenhar o modelo
 
@@ -54,6 +55,7 @@ namespace Nave
 
             pool = new NavePool<Nave>(10, nave_template);
 
+           nave = pool.GetNew();
         }
 
         /// <summary>
@@ -90,10 +92,10 @@ namespace Nave
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            Nave nave = pool.Get();
-
             // TODO: Add your drawing code here
             nave.Draw();
+
+            //Fazer Draw às naves da NavePool
 
             base.Draw(gameTime);
         }

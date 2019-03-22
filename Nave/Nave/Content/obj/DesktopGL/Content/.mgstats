@@ -1,4 +1,1 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/Users/User/Desktop/MotoresJogos-Monogame/Nave/Nave/Content/Models/Ship1/p1_saucer.fbx","C:/Users/User/Desktop/MotoresJogos-Monogame/Nave/Nave/Content/bin/DesktopGL/Content/Models/Ship1/p1_saucer.xnb","ModelProcessor","ModelContent",508854,127095,2,428287
-"C:/Users/User/Desktop/MotoresJogos-Monogame/Nave/Nave/Content/textures/saucer_p1_diff_v1.tga","C:/Users/User/Desktop/MotoresJogos-Monogame/Nave/Nave/Content/bin/DesktopGL/Content/textures/saucer_p1_diff_v1_0.xnb","TextureProcessor","Texture2DContent",203957,87525,1,279141
-"C:/Users/User/Desktop/MotoresJogos-Monogame/Nave/Nave/Content/Textures/saucer_p1_diff_v1.tga","C:/Users/User/Desktop/MotoresJogos-Monogame/Nave/Nave/Content/bin/DesktopGL/Content/Textures/saucer_p1_diff_v1.xnb","TextureProcessor","Texture2DContent",203957,262229,0,0219881
