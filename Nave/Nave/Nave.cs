@@ -14,6 +14,8 @@ namespace Nave
     {
 
         private NaveModel naveModel; // Variável para carregar o modelo 3d da nave
+        private Vector3 position;
+
         public Matrix World { get; set; }
 
         private bool state;
@@ -29,9 +31,9 @@ namespace Nave
         /// </summary>
         public Nave(ContentManager content)
         {
-           naveModel = new NaveModel(content, "Models/Ship1/p1_saucer");
-            
+            naveModel = new NaveModel(content, "Models/Ship1/p1_saucer");
             this.World = Matrix.CreateTranslation(new Vector3(0, 0, 0));
+            position = new Vector3(0, 0, 0);
             state = true;
         }
 
@@ -44,16 +46,17 @@ namespace Nave
         /// <summary>
         /// Método usado para Desenhar o modelo e ambiente 3d do jogo
         /// </summary>
-        /// <param name="model">modelo 3d da nave</param>
-        /// <param name="world">mundo de jogo</param>
-        /// <param name="view"></param>
-        /// <param name="projection"></param>
         public void Draw()
         {
             if (state) {
 
                 naveModel.Draw(World, Camera.View, Camera.Projection);
-                
+
+                //Criar BoundingSphere
+                BoundingSphere auxiliar = new BoundingSphere();
+                auxiliar.Center = position;
+                naveModel.BoundingSphere = auxiliar;
+
             }
         }
 

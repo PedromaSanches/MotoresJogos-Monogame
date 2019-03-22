@@ -18,6 +18,8 @@ namespace Nave
         private NavePool<Nave> pool;
         private Nave nave;
 
+        public NaveModel NaveModel { get; set; } = new NaveModel();
+
         //Criação de Matrizes para desenhar o modelo
 
         public Game1()
@@ -55,7 +57,7 @@ namespace Nave
 
             pool = new NavePool<Nave>(10, nave_template);
 
-           nave = pool.GetNew();
+            nave = pool.GetNew();
         }
 
         /// <summary>
