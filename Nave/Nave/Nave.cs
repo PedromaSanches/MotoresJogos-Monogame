@@ -15,9 +15,13 @@ namespace Nave
 
         private Model model; // Variável para carregar o modelo 3d da nave
         public Matrix World { get; set; }
-        public bool PoolIsValid { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public bool PoolIsFree { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
+        private bool state;
+        public bool State
+        {
+            get { return state; }
+            set { state = value; }
+        }
 
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
@@ -28,7 +32,7 @@ namespace Nave
             //Load do modelo da nave
             model = content.Load<Model>("Models/Ship1/p1_saucer");
             this.World = Matrix.CreateTranslation(new Vector3(0, 0, 0));
-
+            state = true;
         }
 
         //Construtor sem parâmetros
@@ -46,27 +50,29 @@ namespace Nave
         /// <param name="projection"></param>
         public void Draw()
         {
-            foreach (ModelMesh mesh in model.Meshes)
-            {
-                foreach (BasicEffect effect in mesh.Effects)
+            if (state) { 
+                foreach (ModelMesh mesh in model.Meshes)
                 {
-                    effect.World = World;
-                    effect.View = Camera.View;
-                    effect.Projection = Camera.Projection;
+                    foreach (BasicEffect effect in mesh.Effects)
+                    {
+                        effect.World = World;
+                        effect.View = Camera.View;
+                        effect.Projection = Camera.Projection;
+                    }
+                    mesh.Draw();
                 }
-
-                mesh.Draw();
             }
         }
 
         void INavePool.Initialize()
         {
             this.World = Matrix.CreateTranslation(new Vector3(0, 0, 0));
+            state = true;
         }
 
         void INavePool.Release()
         {
-           
+            state = false;
         }
     }
 }

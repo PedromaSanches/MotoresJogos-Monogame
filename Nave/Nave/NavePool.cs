@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 
 /********* Código retirado de: https://blog.bitbull.com/2016/06/30/optimising-memory-use-in-monogame/ *********/
-
 namespace Nave
 {
     /*
@@ -53,54 +52,48 @@ public interface INavePool
 
             for (int i = 0; i < this.capacity; i++)
             {
-                AddNewObject(template);
+                live_stack.Add(template);
             }
         }
 
-        /*
-		 Adds a new object to the pool - ideally this doesn't happen very often 
-		 other than when the pool is constructed
-		 */
-        private void AddNewObject(T obj)
-        {
-            live_stack.Add(obj);
-        }
 
-        /*
-		 * Releases an object from the pool - note that there's no real need 
-		 * to throw the first exception here as if an object is freed twice it's not
-		 * really a problem, however the fact that this is happening usually indicates 
-		 * an issue with one's memory management that could cause issues later so I 
-		 * prefer to leave it in.
-		 */
-        public void Release(T obj)
-        {
-            live_stack.Remove(obj);
-            dead_stack.Add(obj);
-        }
-
-        /*
-		 * Retrieves an object from the pool - automatically create a new object if the pool
-		 * has become depleted.
-		 * 
-		 * Calls Initialize() on the released object which should set all its parameters to
-		 * their default values.
-		 */
-        public T Get()
+        //Gets a new obj from the Live Stack (removes from the list)
+        public T GetNew()
         {
             if (live_stack.Count == 0)
             {
                 //There aren't any living ship so we revive the dead ones
-                ReviveDead();
+                ReviveAllDead();
             }
             T obj = live_stack[0];
-            Release(obj);
+            live_stack.Remove(obj);
             obj.Initialize();
             return obj;
         }
 
+        //Puts 
+        public void Kill(T obj)
+        {
+            obj.Release();
+            dead_stack.Add(obj);
+        }
+
+        //Revive a sinlge ship
+        public T ReviveDead()
+        {
+            if (dead_stack.Count == 0)
+            {
+                return default(T); 
+            }
+            T obj = dead_stack[0];
+            dead_stack.Remove(obj);
+            obj.Initialize();
+            live_stack.Add(obj);
+            return obj;
+        }
+
         //Add all the ships in the dead stack to the living stack, clear dead_stack
-        public void ReviveDead()
+        public void ReviveAllDead()
         {
             foreach (T obj in dead_stack)
             {
