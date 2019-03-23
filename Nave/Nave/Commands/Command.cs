@@ -10,6 +10,6 @@ namespace Nave.Commands
     {
         public abstract void Execute();
 
-        public abstract void Execute(float value);
+        public abstract void Execute(float value, float speed);
     }
 }

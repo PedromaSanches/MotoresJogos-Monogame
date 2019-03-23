@@ -13,14 +13,14 @@ namespace Nave.Commands
             Fire();
         }
 
-        public override void Execute(float value)
+        public override void Execute(float value, float speed)
         {
-            Fire();
         }
 
         private void Fire()
         {
             //Put the code where of firing a bullet
+            Console.WriteLine("Piu!");
         }
     }
 }

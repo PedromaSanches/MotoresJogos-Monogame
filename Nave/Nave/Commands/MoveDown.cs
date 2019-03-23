@@ -6,18 +6,17 @@ namespace Nave.Commands
     {
         public override void Execute()
         {
-            Move(1.0f);
         }
 
-        public override void Execute(float value)
+        public override void Execute(float value, float speed)
         {
-            Move(value);
+            Move(value, speed);
         }
 
-        private void Move(float value)
+        private void Move(float value, float speed)
         {
             Vector3 moveVector = new Vector3(0, -value, 0);
-            Camera.AddToCameraPosition(moveVector);
+            Camera.AddToCameraPosition(moveVector, speed);
         }
     }
 }

@@ -27,12 +27,6 @@ namespace Nave
             static float leftrightRot = 0f;
             //Rotação vertical
             static float updownRot = 0f;
-            //Velocidade da rotação
-            const float rotationSpeed = 0.3f;
-            //Velocidade do movimento com o rato
-            static float moveSpeed = 5f;
-            //Estado do rato
-            static private MouseState originalMouseState;
             //BoundingFrustum da camâra
             static public BoundingFrustum frustum;
             //Tamanho do "mundo"
@@ -51,13 +45,6 @@ namespace Nave
 
             static public TipoCamera tipoCamera;
 
-            static private Command buttonFire;
-            static private Command buttonFoward;
-            static private Command buttonBack;
-            static private Command buttonLeft;
-            static private Command buttonRight;
-            static private Command buttonUp;
-            static private Command buttonDown;
 
 
         /// <summary>
@@ -68,44 +55,14 @@ namespace Nave
             {
 
                 tipoCamera = TipoCamera.Free;
-
                 //Posição inicial da camâra
                 position = new Vector3(0, 0, 30);
                 //Inicializar as matrizes world, view e projection
                 UpdateViewMatrix();
-                Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45),
-                    graphics.Viewport.AspectRatio,
-                    nearPlane,
-                    farPlane);
-
-                //Criar e definir o resterizerState a utilizar para desenhar a geometria
-                rasterizerStateSolid = new RasterizerState();
-                //Desenha todas as faces, independentemente da orientação
-                rasterizerStateSolid.CullMode = CullMode.None;
-                rasterizerStateSolid.MultiSampleAntiAlias = true;
-                rasterizerStateSolid.FillMode = FillMode.Solid;
-                rasterizerStateSolid.SlopeScaleDepthBias = 0.1f;
-                graphics.RasterizerState = rasterizerStateSolid;
-
-                rasterizerStateWireFrame = new RasterizerState();
-                //Desenha todas as faces, independentemente da orientação
-                rasterizerStateWireFrame.CullMode = CullMode.None;
-                rasterizerStateWireFrame.MultiSampleAntiAlias = true;
-                rasterizerStateWireFrame.FillMode = FillMode.WireFrame;
-
+                Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), graphics.Viewport.AspectRatio, nearPlane, farPlane);
                 //Coloca o rato no centro do ecrã
                 Mouse.SetPosition(graphics.Viewport.Width / 2, graphics.Viewport.Height / 2);
-
-                originalMouseState = Mouse.GetState();
-
-            buttonFire = new FireWeapon();
-            buttonFoward = new MoveFoward();
-            buttonBack = new MoveBack();
-            buttonLeft = new MoveLeft();
-            buttonRight = new MoveRight();
-            buttonUp = new MoveUp();
-            buttonDown = new MoveDown();
-        }
+            }
 
             /// <summary>
             /// Calcula e atualiza a ViewMatrix para cada frame, consoante a posição e rotação da camâra
@@ -148,92 +105,10 @@ namespace Nave
             }
 
             /// <summary>
-            /// Implementa os controlos da camâra
-            /// </summary>
-            /// <param name="amount">Tempo decorrido desde o ultimo update</param>
-            /// <param name="graphics">Instância de graphicsDevice</param>
-            static private void ProcessInput(float amount, GraphicsDevice graphics)
-            {
-                //Movimento do rato
-                MouseState currentMouseState = Mouse.GetState();
-                if (currentMouseState != originalMouseState)
-                {
-                    float xDifference = currentMouseState.X - originalMouseState.X;
-                    float yDifference = currentMouseState.Y - originalMouseState.Y;
-                    leftrightRot -= rotationSpeed * xDifference * amount;
-                    updownRot -= rotationSpeed * yDifference * amount;
-
-                    UpdateViewMatrix();
-                }
-
-                Mouse.SetPosition(graphics.Viewport.Width / 2, graphics.Viewport.Height / 2);
-
-                if (currentMouseState.ScrollWheelValue > mouseStateAnterior.ScrollWheelValue)
-                {
-                    moveSpeed += (currentMouseState.ScrollWheelValue - mouseStateAnterior.ScrollWheelValue) / 100;
-                }
-                if (currentMouseState.ScrollWheelValue < mouseStateAnterior.ScrollWheelValue)
-                {
-                    if (moveSpeed > 0.5f) moveSpeed -= (mouseStateAnterior.ScrollWheelValue - currentMouseState.ScrollWheelValue) / 500;
-                    if (moveSpeed < 0.2f) moveSpeed = 0.2f;
-                }
-
-                //Controlos do teclado
-                Vector3 moveVector = new Vector3(0, 0, 0);
-                KeyboardState keyState = Keyboard.GetState();
-                if (keyState.IsKeyDown(Keys.Up) || keyState.IsKeyDown(Keys.W))
-                    buttonFoward.Execute(amount);
-                if (keyState.IsKeyDown(Keys.Down) || keyState.IsKeyDown(Keys.S))
-                    buttonBack.Execute(amount);
-                if (keyState.IsKeyDown(Keys.Right) || keyState.IsKeyDown(Keys.D))
-                    buttonRight.Execute(amount);
-                if (keyState.IsKeyDown(Keys.Left) || keyState.IsKeyDown(Keys.A))
-                    buttonLeft.Execute(amount);
-                if (keyState.IsKeyDown(Keys.Q))
-                    buttonUp.Execute(amount);
-                if (keyState.IsKeyDown(Keys.E))
-                    buttonDown.Execute(amount);
-                if (keyState.IsKeyDown(Keys.O) && !keyStateAnterior.IsKeyDown(Keys.O))
-                {
-                    if (graphics.RasterizerState == rasterizerStateSolid)
-                    {
-                        graphics.RasterizerState = rasterizerStateWireFrame;
-                    }
-                    else
-                    {
-                        graphics.RasterizerState = rasterizerStateSolid;
-                    }
-                }
-                if (keyState.IsKeyDown(Keys.C) && !keyStateAnterior.IsKeyDown(Keys.C))
-                {
-                    if (tipoCamera == TipoCamera.FPS)
-                    {
-                        tipoCamera = TipoCamera.Free;
-                    }
-                    else
-                    {
-                        tipoCamera = TipoCamera.FPS;
-                    }
-                }
-
-                if (keyState.IsKeyDown(Keys.Add))
-                {
-                    moveSpeed += 0.5f;
-                }
-                if (keyState.IsKeyDown(Keys.Subtract))
-                {
-                    if (moveSpeed > 0.5f) moveSpeed -= 0.5f;
-                }
-
-                keyStateAnterior = keyState;
-                mouseStateAnterior = currentMouseState;
-            }
-
-            /// <summary>
             /// Atualiza a posição da camâra
             /// </summary>
             /// <param name="vectorToAdd"></param>
-            static public void AddToCameraPosition(Vector3 vectorToAdd)
+            static public void AddToCameraPosition(Vector3 vectorToAdd, float moveSpeed)
             {
                 Matrix cameraRotation = Matrix.CreateRotationX(updownRot) * Matrix.CreateRotationY(leftrightRot);
                 Vector3 rotatedVector = Vector3.Transform(vectorToAdd, cameraRotation);
@@ -241,21 +116,26 @@ namespace Nave
                 UpdateViewMatrix();
             }
 
-            /// <summary>
-            /// Atualiza os parâmetros da camâra
-            /// </summary>
-            /// <param name="gameTime">Instância de gameTime</param>
-            /// <param name="graphics">Instância de graphicsDevice</param>
-            static public void Update(GameTime gameTime, GraphicsDevice graphics)
+            static public void Update()
             {
-                float timeDifference = (float)gameTime.ElapsedGameTime.TotalMilliseconds / 1000.0f;
-                ProcessInput(timeDifference, graphics);
+                 UpdateViewMatrix();
             }
 
 
+            static public void SetCameraType(TipoCamera tipo)
+            {
+                tipoCamera = tipo;
+            }
+            static public TipoCamera GetCameraType()
+            {
+                return tipoCamera;
+            }
+
+            static public void SetNewRotations(float rotX, float rotY)
+            {
+                leftrightRot -= rotX;
+                updownRot -= rotY;
+            }
         }
 
-        //public Matrix View { get; set; }
-
-    
 }

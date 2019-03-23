@@ -43,6 +43,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
+    <Compile Include="InputInterpeter.cs" />
+    <Compile Include="Observer.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\FireWeapon.cs" />
     <Compile Include="Commands\MoveUp.cs" />

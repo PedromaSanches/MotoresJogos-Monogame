@@ -39,6 +39,7 @@ namespace Nave
         {
             // TODO: Add your initialization logic here
             Camera.Initialize(graphics.GraphicsDevice);
+            InputInterpeter.Initialize(graphics.GraphicsDevice);
             base.Initialize();
             
         }
@@ -83,7 +84,8 @@ namespace Nave
                 Exit();
 
             // TODO: Add your update logic here
-            Camera.Update(gameTime, graphics.GraphicsDevice);
+            InputInterpeter.Update(gameTime, graphics.GraphicsDevice);
+            Camera.Update();
 
             base.Update(gameTime);
         }
