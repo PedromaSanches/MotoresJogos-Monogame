@@ -29,9 +29,9 @@ namespace Nave
         /// LoadContent will be called once per game and is the place to load
         /// all of your content.
         /// </summary>
-        public Nave(ContentManager content)
+        public Nave(NaveModel model)
         {
-            naveModel = new NaveModel(content, "Models/Ship1/p1_saucer");
+            naveModel = model;
             this.World = Matrix.CreateTranslation(new Vector3(0, 0, 0));
             position = new Vector3(0, 0, 0);
             state = true;

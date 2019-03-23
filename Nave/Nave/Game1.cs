@@ -15,6 +15,7 @@ namespace Nave
         SpriteBatch spriteBatch;
 
         private Nave nave_template;
+        private NaveModel nave_model;
         private NavePool<Nave> pool;
         private Nave nave;
 
@@ -52,8 +53,9 @@ namespace Nave
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            nave_model = new NaveModel(Content, "Models/Ship1/p1_saucer");
 
-            nave_template = new Nave(Content); // Variável para carregar o modelo 3d da nave
+            nave_template = new Nave(nave_model); // Variável para carregar o modelo 3d da nave
 
             pool = new NavePool<Nave>(10, nave_template);
 
