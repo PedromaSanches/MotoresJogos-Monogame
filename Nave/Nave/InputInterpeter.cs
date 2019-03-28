@@ -8,10 +8,6 @@ namespace Nave
     static class InputInterpeter
     {
 
-        //Rotação horizontal
-        static float leftrightRot = 0f;
-        //Rotação vertical
-        static float updownRot = 0f;
         //Velocidade da rotação
         const float rotationSpeed = 0.3f;
         //Velocidade do movimento com o rato
@@ -32,6 +28,7 @@ namespace Nave
         static private Command buttonRight;
         static private Command buttonUp;
         static private Command buttonDown;
+        static private Command buttonCamera;
 
         static public void Initialize(GraphicsDevice graphics)
         {
@@ -57,6 +54,7 @@ namespace Nave
             buttonRight = new MoveRight();
             buttonUp = new MoveUp();
             buttonDown = new MoveDown();
+            buttonCamera = new ChangeCamera();
             originalMouseState = Mouse.GetState();
         }
 
@@ -107,6 +105,9 @@ namespace Nave
             //Tiro
             if (keyState.IsKeyDown(Keys.Space))
                 buttonFire.Execute();
+            //change type of camera
+            if (keyState.IsKeyDown(Keys.C) && !keyStateAnterior.IsKeyDown(Keys.C))
+                buttonCamera.Execute();
             //Change the rendertype
             if (keyState.IsKeyDown(Keys.O) && !keyStateAnterior.IsKeyDown(Keys.O))
             {
@@ -115,23 +116,8 @@ namespace Nave
                 else
                     graphics.RasterizerState = rasterizerStateSolid;
             }
-            //change type of camera
-            if (keyState.IsKeyDown(Keys.C) && !keyStateAnterior.IsKeyDown(Keys.C))
-            {
-                if (Camera.GetCameraType() == TipoCamera.FPS)
-                {
-                    Camera.SetCameraType(TipoCamera.Free);
-                }
-                else
-                {
-                    Camera.SetCameraType(TipoCamera.FPS);
-                }
-            }
-
             if (keyState.IsKeyDown(Keys.Add))
-            {
                 moveSpeed += 0.5f;
-            }
             if (keyState.IsKeyDown(Keys.Subtract))
             {
                 if (moveSpeed > 0.5f) moveSpeed -= 0.5f;

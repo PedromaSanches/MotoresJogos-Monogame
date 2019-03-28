@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/pedro/Desktop/Motores de Jogos/MotoresJogos-Monogame/Nave/Nave/Content/Textures/saucer_p1_diff_v1.tga</SourceFile>
-  <SourceTime>2011-12-29T22:55:39.142789+00:00</SourceTime>
-  <DestFile>C:/Users/pedro/Desktop/Motores de Jogos/MotoresJogos-Monogame/Nave/Nave/Content/bin/DesktopGL/Content/Textures/saucer_p1_diff_v1.xnb</DestFile>
-  <DestTime>2019-03-22T19:57:08.4798282+00:00</DestTime>
+  <SourceFile>C:/Users/User/Desktop/MotoresJogos-Monogame/Nave/Nave/Content/Textures/saucer_p1_diff_v1.tga</SourceFile>
+  <SourceTime>2019-03-09T14:09:09.9739543+00:00</SourceTime>
+  <DestFile>C:/Users/User/Desktop/MotoresJogos-Monogame/Nave/Nave/Content/bin/DesktopGL/Content/Textures/saucer_p1_diff_v1.xnb</DestFile>
+  <DestTime>2019-03-23T14:44:55.3780581+00:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2018-12-08T16:35:54+00:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
