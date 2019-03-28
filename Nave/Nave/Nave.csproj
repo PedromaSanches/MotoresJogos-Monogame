@@ -43,9 +43,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
+<<<<<<< .merge_file_a04940
     <Compile Include="Commands\ChangeCamera.cs" />
     <Compile Include="InputInterpeter.cs" />
     <Compile Include="Observer.cs" />
+=======
+>>>>>>> .merge_file_a04136
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\FireWeapon.cs" />
     <Compile Include="Commands\MoveUp.cs" />
@@ -61,6 +64,7 @@
     <Compile Include="Nave.cs" />
     <Compile Include="NaveModel.cs" />
     <Compile Include="NavePool.cs" />
+    <Compile Include="Octree.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaveGame.cs" />
