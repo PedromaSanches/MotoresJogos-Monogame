@@ -46,7 +46,7 @@ namespace Nave
         /// <summary>
         /// Método usado para Desenhar o modelo e ambiente 3d do jogo
         /// </summary>
-        public void Draw()
+        void INavePool.Draw()
         {
             if (state) {
 

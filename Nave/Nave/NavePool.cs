@@ -30,6 +30,11 @@ public interface INavePool
         Set a Position in world space for the object
         */
         void SetPosition(Vector3 position);
+
+        /*
+        Set a Position in world space for the object
+        */
+        void Draw();
     }
     /*
 	  Template for a generically-typed object pool - pooled objects must
@@ -81,8 +86,7 @@ public interface INavePool
                 //There aren't any living ship so we revive the dead ones
                 ReviveAllDead();
             }
-            T obj = live_stack[index];
-            return obj;
+            return live_stack[index];
         }
 
         //Puts 
@@ -107,8 +111,6 @@ public interface INavePool
             {
                 dead_stack.Remove(dead_stack[i]);
             }
-            
-
         }
 
         //Add all the ships in the dead stack to the living stack, clear dead_stack
@@ -123,6 +125,15 @@ public interface INavePool
             {
                dead_stack.Remove(obj);
             }
+        }
+
+        public void Draw()
+        {
+            for (int i = 0; i < this.capacity; i++)
+            {
+                live_stack[i].Draw();
+            }
+
         }
     }
 

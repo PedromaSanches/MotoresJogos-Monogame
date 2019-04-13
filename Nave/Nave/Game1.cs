@@ -55,12 +55,17 @@ namespace Nave
 
             // TODO: use this.Content to load your game content here
             nave_model = new NaveModel(Content, "Models/Ship1/p1_saucer");
-
             nave_template = new Nave(nave_model); // Variável para carregar o modelo 3d da nave
 
             pool = new NavePool<Nave>(10, nave_template);
+            Vector3 worldPos = new Vector3(0, 0, 0);
+            for(int i = 0; i<10; i++)
+            {
+                //worldPos.X += i;
+                worldPos.Y = i;
+                pool.SetPosition(i, worldPos);
 
-            nave = pool.GetNew();
+            }
         }
 
         /// <summary>
@@ -99,8 +104,7 @@ namespace Nave
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            nave.Draw();
-
+            pool.Draw();
             //Fazer Draw às naves da NavePool
 
             base.Draw(gameTime);
