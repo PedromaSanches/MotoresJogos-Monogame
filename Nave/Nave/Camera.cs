@@ -27,7 +27,7 @@ namespace Nave
             static float leftrightRot = 0f;
             //Rotação vertical
             static float updownRot = 0f;
-            //BoundingFrustum da camâra
+            //BoundingFrustum da câmara
             static public BoundingFrustum frustum;
             //Tamanho do "mundo"
             public static int worldSize = 1000;
@@ -44,8 +44,6 @@ namespace Nave
             static public bool drawNormals = false;
 
             static public TipoCamera tipoCamera;
-
-
 
         /// <summary>
         /// Inicializa os componentes da camara
