@@ -14,10 +14,7 @@ namespace Nave
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        private Nave nave_template;
-        private NaveModel nave_model;
-        private NavePool<Nave> pool;
-        private Nave nave;
+        ResourceManager resourceManager;
 
         public NaveModel NaveModel { get; set; } = new NaveModel();
 
@@ -52,20 +49,8 @@ namespace Nave
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            resourceManager = new ResourceManager(Content);
 
-            // TODO: use this.Content to load your game content here
-            nave_model = new NaveModel(Content, "Models/Ship1/p1_saucer");
-            nave_template = new Nave(nave_model); // Variável para carregar o modelo 3d da nave
-
-            pool = new NavePool<Nave>(10, nave_template);
-            Vector3 worldPos = new Vector3(0, 0, 0);
-            for(int i = 0; i<10; i++)
-            {
-                //worldPos.X += i;
-                worldPos.Y = i;
-                pool.SetPosition(i, worldPos);
-
-            }
         }
 
         /// <summary>
@@ -107,7 +92,7 @@ namespace Nave
             //Frustum - Se a nave estiver contida na área visivel pela câmara, desenha a nave
             if (Camera.frustum.Contains(NaveModel.BoundingSphere) != ContainmentType.Disjoint)
             {
-                pool.Draw();
+                resourceManager.Pool.Draw();
             }
             //Fazer Draw às naves da NavePool
 

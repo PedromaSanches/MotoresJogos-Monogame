@@ -29,7 +29,7 @@ public interface INavePool
         /*
         Set a Position in world space for the object
         */
-        void SetPosition(Vector3 position);
+        void SetNaveModel(NaveModel model);
 
         /*
         Set a Position in world space for the object
@@ -55,7 +55,7 @@ public interface INavePool
         /*
 		 Creates a new object pool with the specifed initial number of objects
 		 */
-        public NavePool(int capacity, T template)
+        public NavePool(int capacity)
         {
             this.capacity = capacity;
             live_stack = new List<T>(this.capacity);
@@ -63,14 +63,16 @@ public interface INavePool
 
             for (int i = 0; i < this.capacity; i++)
             {
-                live_stack.Add(template);
+                T obj = new T();
+                obj.Initialize();
+                live_stack.Add(obj);
             }
         }
 
-        //Auxilially to set a posotion to the 
-        public void SetPosition(int index, Vector3 position)
+        //Auxilially to set a nave model to shit
+        public void SetModel(int index, NaveModel naveModel)
         {
-            live_stack[index].SetPosition(position);
+            live_stack[index].SetNaveModel(naveModel);
         }
 
         public int Size()
