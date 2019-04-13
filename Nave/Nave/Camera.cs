@@ -131,6 +131,11 @@ namespace Nave
                 return tipoCamera;
             }
 
+            static public Vector3 GetCameraPosition()
+            {
+                return position;
+            }
+
             static public void SetNewRotations(float rotX, float rotY)
             {
                 leftrightRot -= rotX;
