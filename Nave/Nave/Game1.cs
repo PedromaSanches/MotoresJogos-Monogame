@@ -13,6 +13,7 @@ namespace Nave
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        private static SkyBox skyBox;
 
         ResourceManager resourceManager;
 
@@ -50,6 +51,15 @@ namespace Nave
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             resourceManager = new ResourceManager(Content);
+
+            //Load Skybox
+            skyBox = new SkyBox(graphics.GraphicsDevice);
+            skyBox.Textures[0] = Content.Load<Texture2D>("skybox/front");
+            skyBox.Textures[1] = Content.Load<Texture2D>("skybox/back");
+            skyBox.Textures[2] = Content.Load<Texture2D>("skybox/bottom");
+            skyBox.Textures[3] = Content.Load<Texture2D>("skybox/top");
+            skyBox.Textures[4] = Content.Load<Texture2D>("skybox/left");
+            skyBox.Textures[5] = Content.Load<Texture2D>("skybox/right");
 
         }
 

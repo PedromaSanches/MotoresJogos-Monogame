@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Camera.cs" />
     <Compile Include="Commands\ChangeCamera.cs" />
+    <Compile Include="ExplosionParticleSystem.cs" />
     <Compile Include="InputInterpeter.cs" />
     <Compile Include="Observer.cs" />
     <Compile Include="Commands\Command.cs" />
@@ -62,10 +63,12 @@
     <Compile Include="NaveModel.cs" />
     <Compile Include="NavePool.cs" />
     <Compile Include="Octree.cs" />
+    <Compile Include="ParticleSystem.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceManager.cs" />
     <Compile Include="SaveGame.cs" />
+    <Compile Include="Skybox.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
