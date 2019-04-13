@@ -50,16 +50,12 @@ namespace Nave
         {
             if (state) {
 
+                naveModel.Draw(World, Camera.View, Camera.Projection);
+
                 //Criar BoundingSphere
                 BoundingSphere auxiliar = new BoundingSphere();
                 auxiliar.Center = position;
                 naveModel.BoundingSphere = auxiliar;
-
-                //Frustum - Se a nave estiver contida na área visivel pela câmara, desenha a nave
-                if (Camera.frustum.Contains(naveModel.BoundingSphere) != ContainmentType.Disjoint)
-                {
-                    naveModel.Draw(World, Camera.View, Camera.Projection);
-                }
 
             }
         }

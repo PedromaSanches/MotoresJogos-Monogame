@@ -104,7 +104,11 @@ namespace Nave
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            pool.Draw();
+            //Frustum - Se a nave estiver contida na área visivel pela câmara, desenha a nave
+            if (Camera.frustum.Contains(NaveModel.BoundingSphere) != ContainmentType.Disjoint)
+            {
+                pool.Draw();
+            }
             //Fazer Draw às naves da NavePool
 
             base.Draw(gameTime);
