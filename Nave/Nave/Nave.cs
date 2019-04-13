@@ -12,6 +12,7 @@ namespace Nave
 {
     public class Nave : INavePool
     {
+        private Random var = new Random();
 
         private NaveModel naveModel; // Variável para carregar o modelo 3d da nave
         private Vector3 position;
@@ -32,15 +33,32 @@ namespace Nave
         public Nave(NaveModel model)
         {
             naveModel = model;
-            this.World = Matrix.CreateTranslation(new Vector3(0, 0, 0));
             position = new Vector3(0, 0, 0);
+            this.World = Matrix.CreateTranslation(position);
             state = true;
         }
 
         //Construtor sem parâmetros
         public Nave()
         {
+            naveModel = null;
+            position = new Vector3(var.Next(0, 10), var.Next(0, 10), var.Next(0, 10));
+            this.World = Matrix.CreateTranslation(position);
+            state = true;
+        }
 
+        //Construtor por copia
+        public Nave(Nave nave)
+        {
+            this.naveModel = nave.naveModel;
+            this.position = new Vector3(var.Next(0, 10), var.Next(0, 10), var.Next(0, 10));
+            this.World = Matrix.CreateTranslation(position);
+            this.state = nave.state;
+        }
+
+        public Vector3 Position()
+        {
+            return this.position;
         }
 
         /// <summary>
@@ -51,7 +69,20 @@ namespace Nave
             if (state) {
 
                 naveModel.Draw(World, Camera.View, Camera.Projection);
+                //Criar BoundingSphere
+                BoundingSphere auxiliar = new BoundingSphere();
+                auxiliar.Center = position;
+                naveModel.BoundingSphere = auxiliar;
 
+            }
+        }
+
+        public void DrawME()
+        {
+            if (state)
+            {
+
+                naveModel.Draw(World, Camera.View, Camera.Projection);
                 //Criar BoundingSphere
                 BoundingSphere auxiliar = new BoundingSphere();
                 auxiliar.Center = position;
@@ -62,7 +93,7 @@ namespace Nave
 
         void INavePool.Initialize()
         {
-            position = new Vector3(0, 0, 0);
+            position = new Vector3(var.Next(0, 10), var.Next(0, 10), var.Next(0, 10));
             this.World = Matrix.CreateTranslation(position);
             state = true;
         }
@@ -72,10 +103,9 @@ namespace Nave
             state = false;
         }
 
-        void INavePool.SetPosition(Vector3 position)
+        void INavePool.SetNaveModel(NaveModel nm)
         {
-            this.position = position;
-            this.World = Matrix.CreateTranslation(this.position);
+            naveModel = nm;
         }
     }
 }
