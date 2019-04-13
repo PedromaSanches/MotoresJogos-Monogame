@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 
 /********* Código retirado de: https://blog.bitbull.com/2016/06/30/optimising-memory-use-in-monogame/ *********/
@@ -24,6 +25,11 @@ public interface INavePool
 		 */
         void Release();
 
+
+        /*
+        Set a Position in world space for the object
+        */
+        void SetPosition(Vector3 position);
     }
     /*
 	  Template for a generically-typed object pool - pooled objects must
@@ -56,24 +62,33 @@ public interface INavePool
             }
         }
 
+        //Auxilially to set a posotion to the 
+        public void SetPosition(int index, Vector3 position)
+        {
+            live_stack[index].SetPosition(position);
+        }
+
+        public int Size()
+        {
+            return capacity;
+        }
 
         //Gets a new obj from the Live Stack (removes from the list)
-        public T GetNew()
+        public T Get(int index)
         {
             if (live_stack.Count == 0)
             {
                 //There aren't any living ship so we revive the dead ones
                 ReviveAllDead();
             }
-            T obj = live_stack[0];
-            live_stack.Remove(obj);
-            obj.Initialize();
+            T obj = live_stack[index];
             return obj;
         }
 
         //Puts 
         public void Kill(T obj)
         {
+            live_stack.Remove(obj);
             obj.Release();
             dead_stack.Add(obj);
         }
@@ -101,6 +116,7 @@ public interface INavePool
         {
             foreach (T obj in dead_stack)
             {
+                obj.Initialize();
                 live_stack.Add(obj);
             }
             foreach (T obj in live_stack)

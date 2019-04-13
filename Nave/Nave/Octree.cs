@@ -358,7 +358,8 @@ namespace Nave
                 if (AreChildrenEmpty)
                     children.Clear();
 
-                // try and collapse / merge the Octree by notifying the parent to check other children
+                // 
+                and collapse / merge the Octree by notifying the parent to check other children
                 if (IsEmpty)
                 {
                     if (parent != null)

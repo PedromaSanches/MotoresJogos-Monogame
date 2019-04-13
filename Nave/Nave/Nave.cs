@@ -62,13 +62,20 @@ namespace Nave
 
         void INavePool.Initialize()
         {
-            this.World = Matrix.CreateTranslation(new Vector3(0, 0, 0));
+            position = new Vector3(0, 0, 0);
+            this.World = Matrix.CreateTranslation(position);
             state = true;
         }
 
         void INavePool.Release()
         {
             state = false;
+        }
+
+        void INavePool.SetPosition(Vector3 position)
+        {
+            this.position = position;
+            this.World = Matrix.CreateTranslation(this.position);
         }
     }
 }
